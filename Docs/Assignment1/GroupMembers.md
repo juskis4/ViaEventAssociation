@@ -1,5 +1,10 @@
-﻿## Members of TableArchitectures team
+﻿# Assignment 1
 
-**Lukas Juškevičius** 305575 \
-**Alexandru Dulghier** 315267 \
-**Syamend Mamo** 317546 
+### Members of TableArchitectures team:
+
+* **Lukas Juškevičius** 
+    * 305575
+* **Alexandru Dulghier**
+    * 315267
+* **Syamend Mamo**
+    *  317546
