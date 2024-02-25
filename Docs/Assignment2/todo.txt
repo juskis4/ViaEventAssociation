@@ -1,0 +1,4 @@
+-add IDs value Objects
+-Define Cluster (draw the borders)
+-add Arrows for the value Objects
+probably more...
