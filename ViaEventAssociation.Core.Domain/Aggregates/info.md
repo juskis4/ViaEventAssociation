@@ -1,0 +1,1 @@
+This will contain a directory per aggregate in your DM. Into an aggregate directory go everything related to this aggregate: entities, owned value objects, enums, enumeration classes, repository interfaces (later session), exceptions if any, perhaps specific Result errors, etc.
