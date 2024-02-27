@@ -1,5 +1,134 @@
-bin/
-obj/
+## .NET ##
+[Bb]in/
+[Oo]bj/
+[Ll]ogs/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa]rtifacts/
+TestResults/
+
+## User-specific files ##
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## User-specific files (MonoDevelop/Xamarin Studio) ##
+*.userprefs
+
+## VS Code ##
+.vscode/
+*.code-workspace
+
+## Visual Studio ##
+.vs/
+*.ncrunch*
+*.nCrunch*
+*.crunch*.local.xml
+*.DotSettings
+*.dotCover
+*ReSharper*
+*resharper*
+*_ReSharper.*
+*.sln.iml
+
+## JetBrains Rider ##
+.idea/
+*.sln.dotsettings
+*.sln.DotSettings.user
+
+## Build results ##
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa]nyCPU/
+[Bb]in/
+[Oo]bj/
+[Ll]ogs/
+[Tt]est[Rr]esults/
+
+## NuGet ##
+*.nupkg
+*.snupkg
+/NuGet.Config
+/NuGet.exe
+/NuGet.targets
+/NuGet.Protocol.dll
 /packages/
-riderModule.iml
-/_ReSharper.Caches/
+*.nuget.props
+*.nuget.targets
+
+## Tooling ##
+*.njsproj
+*.ntvs_analysis.dat
+node_modules/
+
+## Project files ##
+*.csproj
+*.vbproj
+*.fsproj
+*.dbproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userosscache
+*.dotsettings
+*.v12.suo
+*.v14.suo
+*.vspscc
+*_i.c
+*_p.c
+*.pidb
+*.svclog
+*.scc
+
+## Other ##
+*.cache
+*.trx
+*.vsmdproj
+*.gpState
+*.tmp_proj
+*.log
+*.tlog
+*.vspx
+*.builds
+*.pidb
+*.log
+*.sbr
+*.psess
+*.vsp
+*.vspx
+*.userosscache
+
+## OS generated files ##
+.DS_Store*
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+## Temporary files ##
+*.tmp
+*.bak
+*.log
+/tmp/
+
+## Exclude the NuGet packages directory ##
+/packages/
+!**/packages/build/
+
+## Exclude the build results directory ##
+[Bb]in/
+[Oo]bj/
+
+## R# ##
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
