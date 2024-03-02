@@ -20,7 +20,7 @@ public class Result
         return result;
     }
 
-    // This will be usefull when the result will have errors from different
+    // This will be useful when the result will have errors from different
     // places of our system, making it possible to add errors to already created result.
     // Also used by generic implementation of Result
     public void AddError(string error) => _errors.Add(error);
