@@ -24,6 +24,7 @@ public class Result
     // places of our system, making it possible to add errors to already created result.
     // Also used by generic implementation of Result
     public void AddError(string error) => _errors.Add(error);
+    public Array GetErrors() => _errors.ToArray();
 }
 
 public class Result<T> : Result
