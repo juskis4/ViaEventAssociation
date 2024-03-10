@@ -22,4 +22,8 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ViaEventAssociation.Core.Domain\ViaEventAssociation.Core.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
