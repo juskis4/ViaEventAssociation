@@ -29,23 +29,25 @@ public class EventName
         if (string.IsNullOrEmpty(title))
         {
             errors.Add("Title cannot be NULL or Empty.");
-        }
-
-        if (string.IsNullOrWhiteSpace(title))
+        } else 
         {
-            errors.Add("Title cannot bee a white space.");
-        }
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                errors.Add("Title cannot bee a white space.");
+            }
 
-        if (title.Length < 3)
-        {
-            errors.Add("Title cannot be less than 3 characters.");
-        }
+            if (title.Length < 3)
+            {
+                errors.Add("Title cannot be less than 3 characters.");
+            }
 
-        if (title.Length > 75)
-        {
-            errors.Add("Title cannot be more than 75 characters.");
-        }
+            if (title.Length > 75)
+            {
+                errors.Add("Title cannot be more than 75 characters.");
+            }
+        } 
 
         return errors.Any() ? Result.Failure(errors.ToArray()) : Result.Success();
     }
+
 }
