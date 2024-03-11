@@ -1,27 +1,37 @@
+using ViaEventAssociation.Core.Tools.OperationResult;
+
 namespace ViaEventAssociation.Core.Domain.Aggregates.Locations;
 
 public class Location
 {
-    private LocationName name;
-    private Capacity capacity;
-    private Adress adress;
-    private bool available = true;
+    private LocationName _name;
+    private Capacity _capacity;
+    private Address _address;
+    private bool _available = true;
 
-    public Location(LocationName name, Capacity capacity, Adress adress)
+    public Location(LocationName name, Capacity capacity, Address address)
     {
-        this.name = name;
-        this.capacity = capacity;
-        this.adress = adress;
+        _name = name;
+        _capacity = capacity;
+        _address = address;
     }
 
-    public Result setMaximumNumberOfPeople(Capacity capacity)
+    public Result SetMaximumNumberOfPeople(Capacity capacity)
     {
-        this.capacity = capacity;
+        _capacity = capacity;
+        return Result.Success();
     }
 
-    public Result setAvailability(bool availability)
+    public Result UpdateLocationName(LocationName name)
     {
-        this.available = availability;
+        _name = name;
+        return Result.Success();
+    }
+
+    public Result SetAvailability(bool availability)
+    {
+        _available = availability;
+        return Result.Success();
     }
 
 }
