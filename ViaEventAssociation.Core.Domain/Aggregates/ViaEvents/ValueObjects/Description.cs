@@ -29,11 +29,13 @@ public class Description
         if (string.IsNullOrEmpty(descriptionText))
         {
             errors.Add("Description cannot be null or empty.");
-        }
-
-        if (descriptionText.Length > 250)
+        } 
+        else 
         {
-            errors.Add("Description cannot exceed 250 characters.");
+            if (descriptionText.Length > 250)
+            {
+                errors.Add("Description cannot exceed 250 characters.");
+            }
         }
 
         return errors.Any() ? Result.Failure(errors.ToArray()) : Result.Success();
