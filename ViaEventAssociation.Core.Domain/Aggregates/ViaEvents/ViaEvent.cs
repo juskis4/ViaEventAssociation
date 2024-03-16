@@ -92,5 +92,30 @@ public class ViaEvent
 
         return Result.Failure($"an {stats} event cannot be modified");
     }
+
+    // UC3 - Update Description
+    public Result UpdateDescription(string newDescription)
+    {
+        if (Status != Status.Draft && Status != Status.Ready) 
+        {
+            return Result.Failure($"Event in status {Status} cannot be modified.");
+        }
+
+        var descriptionResult = Description.Create(newDescription);
+        if (!descriptionResult.IsSuccess)
+        {
+            return Result.Failure(descriptionResult.Errors.ToArray());
+        }
+
+        Description = descriptionResult.Data;
+
+        // UC3 - S3
+        if (Status == Status.Ready)
+        {
+            Status = Status.Draft;  
+        } 
+
+        return Result.Success();
+    }
     
 }
