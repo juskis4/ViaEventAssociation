@@ -19,23 +19,18 @@ public class Description
             return Result<Description>.Failure(validationResult.Errors.ToArray());
         }
 
-        return Result<Description>.Success(new Description(descriptionText));
+        var finalDescriptionText = string.IsNullOrEmpty(descriptionText) ? "No description provided." : descriptionText;
+
+        return Result<Description>.Success(new Description(finalDescriptionText));
     }
 
     private static Result Validate(string descriptionText)
     {
         var errors = new List<string>();
 
-        if (string.IsNullOrEmpty(descriptionText))
+        if (descriptionText?.Length > 250) 
         {
-            errors.Add("Description cannot be null or empty.");
-        } 
-        else 
-        {
-            if (descriptionText.Length > 250)
-            {
-                errors.Add("Description cannot exceed 250 characters.");
-            }
+            errors.Add("Description cannot exceed 250 characters.");
         }
 
         return errors.Any() ? Result.Failure(errors.ToArray()) : Result.Success();
