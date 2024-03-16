@@ -32,7 +32,7 @@ public class EndEventDate
         }
 
         if (endDateTime.TimeOfDay < new TimeSpan(8, 0, 0) || 
-            endDateTime.TimeOfDay >= new TimeSpan(1, 0, 0)) 
+            endDateTime.TimeOfDay >= new TimeSpan(13, 0, 0)) 
         {
             errors.Add("Event end time must be between 08:00 AM and 01:00 AM (next day).");
         }
