@@ -28,7 +28,7 @@ public class Description
 
         if (string.IsNullOrEmpty(descriptionText))
         {
-            errors.Add("Description cannot be null or empty.");
+            descriptionText = "";
         }
 
         if (descriptionText.Length > 250)

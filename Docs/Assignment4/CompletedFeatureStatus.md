@@ -3,21 +3,21 @@
 * [ ] **ValueObject base**
 * [ ] **Entity base**
 * [ ] **Aggregate Base**
-* [ ] **UC1 - Create Event**
-  * [ ] Value - EventId
-  * [ ] S1
-  * [ ] S2
-  * [ ] S3
-  * [ ] S4
-* [ ] **UC2 - Update Title**
-  * [ ] S1
-  * [ ] S2
-  * [ ] F1
-  * [ ] F2
-  * [ ] F3
-  * [ ] F4
-  * [ ] F5
-  * [ ] F6
+* [x] **UC1 - Create Event**
+  * [x] Value - EventId
+  * [x] S1
+  * [x] S2
+  * [x] S3
+  * [x] S4
+* [x] **UC2 - Update Title**
+  * [x] S1
+  * [x] S2
+  * [x] F1
+  * [x] F2
+  * [x] F3
+  * [x] F4
+  * [x] F5
+  * [x] F6
 * [ ] **UC3 - Update Description**
   * [ ] S1
   * [ ] S2
