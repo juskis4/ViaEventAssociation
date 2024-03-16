@@ -24,6 +24,7 @@ public class ViaEvent
     private  ViaEvent(EventId id, EventName title, Description description,StartEventDate startDate, 
         EndEventDate endDate, Capacity capacity, bool isPublic, Status status)
     {
+        Id = id;
         Capacity = capacity;
         Description = description; 
         EndDate = endDate;
@@ -36,6 +37,7 @@ public class ViaEvent
     
     private  ViaEvent(EventId id,EventName title, Description description,Capacity capacity , bool isPublic = false)
     {
+        Id = id;
         Capacity = capacity;
         Description = description;
         IsPublic = isPublic;
@@ -91,6 +93,16 @@ public class ViaEvent
         }
 
         return Result.Failure($"an {stats} event cannot be modified");
+    }
+
+    public Result MakeEventPublic()
+    {
+        if (Status == Status.Cancelled)
+        {
+            return Result.Failure("a cancelled event cannot be modified");
+        }
+        IsPublic = true;
+        return Result.Success();
     }
     
 }

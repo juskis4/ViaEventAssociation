@@ -1,1 +1,0 @@
-All value objects. Not strictly necessary, could go to sub-folder of Features, but lets try to use this one:)

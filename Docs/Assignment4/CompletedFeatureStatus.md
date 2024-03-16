@@ -42,9 +42,9 @@
   * [ ] F9
   * [ ] F10
   * [ ] F11
-* [ ] **UC5 - Make Event Public**
-  * [ ] S1
-  * [ ] F1
+* [x] **UC5 - Make Event Public**
+  * [x] S1
+  * [x] F1
 * [ ] **UC6 - Make Event Private**
   * [ ] S1
   * [ ] S2
