@@ -129,5 +129,17 @@ public class ViaEvent
 
         return Result.Success();
     }
-    
+
+    public Result MakeEventPrivate()
+    {
+        if (Status == Status.Cancelled || Status == Status.Active)
+        {
+            return Result.Failure($"a {Status} event cannot be modified");
+        }
+        IsPublic = false;
+        Status = Status.Draft;
+
+        return Result.Success();
+    }
+
 }

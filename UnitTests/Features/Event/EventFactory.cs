@@ -18,7 +18,7 @@ namespace UnitTests.Features.Event
             var results = new Result[] { eventId, title, description, startDate, endDate, capacity };
             if (results.All(r => r.IsSuccess)) 
             {
-                return ViaEvent.Create(eventId.Data, title.Data, description.Data, startDate.Data, endDate.Data, capacity.Data, true, Status.Draft);
+                return ViaEvent.Create(eventId.Data, title.Data, description.Data, startDate.Data, endDate.Data, capacity.Data, default, Status.Draft);
             } 
             else 
             {
@@ -41,7 +41,7 @@ namespace UnitTests.Features.Event
             var results = new Result[] { eventId, title, description, startDate, endDate, capacity };
             if (results.All(r => r.IsSuccess)) 
             {
-                return ViaEvent.Create(eventId.Data, title.Data, description.Data, startDate.Data, endDate.Data, capacity.Data, true, Status.Ready);
+                return ViaEvent.Create(eventId.Data, title.Data, description.Data, startDate.Data, endDate.Data, capacity.Data, default, Status.Ready);
             } 
             else 
             {
@@ -64,7 +64,7 @@ namespace UnitTests.Features.Event
             var results = new Result[] { eventId, title, description, startDate, endDate, capacity };
             if (results.All(r => r.IsSuccess)) 
             {
-                return ViaEvent.Create(eventId.Data, title.Data, description.Data, startDate.Data, endDate.Data, capacity.Data, true, Status.Cancelled);
+                return ViaEvent.Create(eventId.Data, title.Data, description.Data, startDate.Data, endDate.Data, capacity.Data, default, Status.Cancelled);
             } 
             else 
             {
@@ -87,7 +87,7 @@ namespace UnitTests.Features.Event
             var results = new Result[] { eventId, title, description, startDate, endDate, capacity };
             if (results.All(r => r.IsSuccess)) 
             {
-                return ViaEvent.Create(eventId.Data, title.Data, description.Data, startDate.Data, endDate.Data, capacity.Data, true, Status.Active);
+                return ViaEvent.Create(eventId.Data, title.Data, description.Data, startDate.Data, endDate.Data, capacity.Data,default, Status.Active);
             } 
             else 
             {
