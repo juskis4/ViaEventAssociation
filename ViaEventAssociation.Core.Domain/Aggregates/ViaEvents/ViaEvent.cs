@@ -121,7 +121,7 @@ public class ViaEvent
         {
             Status = Status.Draft;  
         } 
-       return Result.Success();
+        return Result.Success();
     }
 
 
@@ -179,6 +179,10 @@ public class ViaEvent
 
     public Result Readies ()
     {
+        if (Status == Status.Ready)
+        {
+            return Result.Success();
+        }
         var errors = new List<string>();
         if (Status != Status.Draft)
         {
@@ -201,6 +205,27 @@ public class ViaEvent
             return Result.Failure(errors.ToArray());
         }
         Status = Status.Ready;
+        return Result.Success();
+    }
+    
+    public Result Activate()
+    {
+        if (Status == Status.Active)
+        {
+            return Result.Success();
+        }
+        
+        if (Status != Status.Active)
+        {
+            var result = Readies();
+            if (!result.IsSuccess)
+            {
+                return Result.Failure(result.Errors.ToArray());
+            }
+        }
+
+
+        Status = Status.Active;
         return Result.Success();
     }
 
