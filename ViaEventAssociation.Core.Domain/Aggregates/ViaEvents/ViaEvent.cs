@@ -118,4 +118,16 @@ public class ViaEvent
         return Result.Success();
     }
     
+    //UC7
+    public Result setMaximumNumberGuests(int maxGuests)
+    {
+        if (Status == Status.Active && maxGuests < Capacity.CapacityCount)
+        {
+            return Result.Failure($"Capacity in active Event can only be increased");
+        }
+
+        Capacity = Capacity.Create(maxGuests).Data;
+        return Result.Success();
+    }
+    
 }
