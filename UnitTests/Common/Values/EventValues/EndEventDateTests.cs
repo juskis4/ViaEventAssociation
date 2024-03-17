@@ -19,7 +19,7 @@ public class EndEventDateTests
 
         // Assert
         Assert.True(result.IsSuccess);
-        Assert.Equal(validEndDate, result.Data.EndDateTime);
+        Assert.Equal(validEndDate, result.Data.Date);
     }
 
     //BUG: DateTime.Now
@@ -34,7 +34,7 @@ public class EndEventDateTests
 
         // Assert
         Assert.True(result.IsSuccess);
-        Assert.Equal(validEndDate, result.Data.EndDateTime);
+        Assert.Equal(validEndDate, result.Data.Date);
     }
 
     // Failure Scenarios

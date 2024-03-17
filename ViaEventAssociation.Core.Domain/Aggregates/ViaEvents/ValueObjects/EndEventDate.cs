@@ -4,45 +4,35 @@ namespace ViaEventAssociation.Core.Domain.Aggregates.Events;
 
 public class EndEventDate
 {
-    public DateTime EndDateTime { get; private set; }
+    public DateTime Date { get; private set; }
 
-    private EndEventDate(DateTime endDateTime)
+    private EndEventDate(DateTime date)
     {
-        EndDateTime = endDateTime;
+        Date = date;
     }
 
-    public static Result<EndEventDate> Create(DateTime endDateTime)
+    public static Result<EndEventDate> Create(DateTime date)
     {
-        var validationResult = Validate(endDateTime);
+        var validationResult = Validate(date);
         if (!validationResult.IsSuccess)
         {
             return Result<EndEventDate>.Failure(validationResult.Errors.ToArray());
         }
 
-        return Result<EndEventDate>.Success(new EndEventDate(endDateTime));
+        return Result<EndEventDate>.Success(new EndEventDate(date));
     }
 
-    private static Result Validate(DateTime endDateTime)
+    private static Result Validate(DateTime date)
     {
         var errors = new List<string>();
 
-        if (endDateTime < DateTime.Now)  
+        // Boundary for allowed end time (00:59 AM the next day)
+        var allowedEndTime = date.Date.AddDays(1).AddSeconds(-1);  
+
+        if (date.TimeOfDay > allowedEndTime.TimeOfDay) 
         {
-            errors.Add("Event end date cannot be in the past.");
+            errors.Add("Event end time must fall within room usage hours (08:00 AM - 01:00 AM).");
         }
-
-        if (endDateTime.TimeOfDay < new TimeSpan(8, 0, 0) || 
-            endDateTime.TimeOfDay >= new TimeSpan(13, 0, 0)) 
-        {
-            errors.Add("Event end time must be between 08:00 AM and 01:00 AM (next day).");
-        }
-
-        // TODO: Discuss with teacher
-        // End date must be after the start date 
-
-        // TODO: Discuss with teacher
-        // Event duration cannot exceed 10 hours
-
         return errors.Any() ? Result.Failure(errors.ToArray()) : Result.Success();
     }
 }
