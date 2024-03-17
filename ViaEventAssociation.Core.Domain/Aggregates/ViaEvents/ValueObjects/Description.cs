@@ -19,7 +19,7 @@ public class Description
             return Result<Description>.Failure(validationResult.Errors.ToArray());
         }
 
-        var finalDescriptionText = string.IsNullOrEmpty(descriptionText) ? "No description provided." : descriptionText;
+        var finalDescriptionText = string.IsNullOrEmpty(descriptionText) ? "" : descriptionText;
 
         return Result<Description>.Success(new Description(finalDescriptionText));
     }
