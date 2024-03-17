@@ -48,7 +48,7 @@ namespace UnitTests.Features.Event
 
             // Assert
             Assert.True(result.IsSuccess);
-            Assert.Equal("No description provided.", existingEvent.Description.DescriptionText); 
+            Assert.Equal("", existingEvent.Description.DescriptionText); 
         }
 
         [Fact] 
