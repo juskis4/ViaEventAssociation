@@ -11,19 +11,23 @@ public class GuestCreationTests
     [Fact]
     public void CreateGuest_WithSuccess()
     {
-        // Arrange
-        var firstname = FirstName.Create("John");
+        var firstname = FirstName.Create("john");
         var lastname = LastName.Create("wick");
-        var email = ViaEmail.Create("Johnwick@via.dk");
-        var id = GuestId.Create(112233);
-        // Act 
-        var guest = new Guest(firstname.Data, lastname.Data, email.Data, id.Data);
-        
-        // Assert
-        Assert.Equal(firstname.Data.Name,guest.firstName.Name);
-        Assert.Equal(lastname.Data.Name,guest.lastName.Name);
-        Assert.Equal(email.Data.Email,guest.email.Email);
-        Assert.Equal(id.Data.id,guest.id.id);
+        var email = ViaEmail.Create("jon@via.dk");
+        var id = GuestId.Create();
+        if (firstname.IsSuccess && lastname.IsSuccess && email.IsSuccess && id.IsSuccess)
+        {
+            var guest = Guest.Create(firstname.Data, lastname.Data, email.Data, id.Data);
+            Assert.True(guest.IsSuccess);
+            Assert.Equal("John",guest.Data.firstName.Name);
+            Assert.Equal("Wick",guest.Data.lastName.Name);
+            Assert.Equal(id.Data.Id,guest.Data.id.Id);
+            Assert.Equal(email.Data.Email,guest.Data.email.Email);
+        }
+        else
+        {
+            Assert.True(false,"Guest creation failed");
+        }
 
     }
     
