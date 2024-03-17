@@ -1,3 +1,4 @@
+using ViaEventAssociation.Core.Domain.Aggregates.Locations;
 using ViaEventAssociation.Core.Tools.OperationResult;
 
 namespace ViaEventAssociation.Core.Domain.Aggregates.Events;
@@ -21,6 +22,8 @@ public class ViaEvent
     public EventId Id { get; set; }
     public Status Status { get; set; }
     
+    public Location? Location { get; set; }
+    
     private  ViaEvent(EventId id, EventName title, Description description,StartEventDate startDate, 
         EndEventDate endDate, Capacity capacity, bool isPublic, Status status)
     {
@@ -32,6 +35,7 @@ public class ViaEvent
         IsPublic = isPublic;
         Title = title;
         Status = status;
+        Location = null;
 
     }
     
@@ -129,6 +133,35 @@ public class ViaEvent
 
         return Result.Success();
     }
+    
+    //UC7
+    public Result SetMaximumNumberGuests(int maxGuests)
+    {
+        if (Status == Status.Active && maxGuests < Capacity.CapacityCount)
+        {
+            return Result.Failure("Capacity in active Event can only be increased");
+        }
+
+        if (Location != null && maxGuests > Location.capacity.Cap)
+        {
+            return Result.Failure("Event Capacity cannot be exceed the location Capacity");
+        }
+
+        if (Status == Status.Cancelled)
+        {
+            return Result.Failure("Event is Cancelled and cannot be modified");
+        }
+
+        var capacityResult = Capacity.Create(maxGuests);
+        if (!capacityResult.IsSuccess)
+        {
+            return Result.Failure(capacityResult.Errors.ToArray());
+        }
+        Capacity = capacityResult.Data;
+        return Result.Success();
+    }
+    
+
 
     public Result MakeEventPrivate()
     {
@@ -141,5 +174,6 @@ public class ViaEvent
 
         return Result.Success();
     }
+
 
 }
