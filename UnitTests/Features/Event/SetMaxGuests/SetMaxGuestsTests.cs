@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices.Marshalling;
+using UnitTests.Features.ViaLocations;
 using ViaEventAssociation.Core.Domain.Aggregates.Events;
 using ViaEventAssociation.Core.Tools.OperationResult;
 using Xunit;
@@ -26,7 +28,7 @@ public class SetMaxGuestsTests
         var existingEvent = createEventResult.Data; 
         
         // Act
-        var setMaxGuest = existingEvent.setMaximumNumberGuests(maxGuests);
+        var setMaxGuest = existingEvent.SetMaximumNumberGuests(maxGuests);
 
         // Assert
         Assert.True(setMaxGuest.IsSuccess); 
@@ -47,9 +49,9 @@ public class SetMaxGuestsTests
         var existingEvent = createEventResult.Data; 
         
         // Act
-         existingEvent.setMaximumNumberGuests(23);
-         existingEvent.setMaximumNumberGuests(34);
-        var setMaxGuest = existingEvent.setMaximumNumberGuests(45);
+         existingEvent.SetMaximumNumberGuests(23);
+         existingEvent.SetMaximumNumberGuests(34);
+        var setMaxGuest = existingEvent.SetMaximumNumberGuests(45);
 
         // Assert
         Assert.True(setMaxGuest.IsSuccess); 
@@ -71,7 +73,7 @@ public class SetMaxGuestsTests
         var eventCap = existingEvent.Capacity.CapacityCount;
         
         // Act
-        var setMaxGuest = existingEvent.setMaximumNumberGuests(eventCap-1);
+        var setMaxGuest = existingEvent.SetMaximumNumberGuests(eventCap-1);
 
         // Assert
         Assert.False(setMaxGuest.IsSuccess); 
@@ -94,7 +96,7 @@ public class SetMaxGuestsTests
         var eventCap = existingEvent.Capacity.CapacityCount;
         
         // Act
-        var setMaxGuest = existingEvent.setMaximumNumberGuests(30);
+        var setMaxGuest = existingEvent.SetMaximumNumberGuests(30);
 
         // Assert
         Assert.False(setMaxGuest.IsSuccess); 
@@ -113,18 +115,28 @@ public class SetMaxGuestsTests
             return; 
         }
 
+        var createLocationResult = LocationFactory.CreateAvailableLocation();
+
+        if (!createEventResult.IsSuccess)
+        {
+            Assert.Fail("Location creation failed: " + string.Join(", ", createLocationResult.Errors)); 
+            return;
+        }
+
         var existingEvent = createEventResult.Data;
         var eventCap = existingEvent.Capacity.CapacityCount;
         //get room cap
-        var roomCap = existingEvent;
+        var roomCap = createLocationResult.Data.capacity.Cap;
+        //set event location 
+        existingEvent.Location = createLocationResult.Data;
         
         // Act
-        var setMaxGuest = existingEvent.setMaximumNumberGuests(30);
+        var setMaxGuest = existingEvent.SetMaximumNumberGuests(roomCap+1);
 
         // Assert
         Assert.False(setMaxGuest.IsSuccess); 
         Assert.Equal(eventCap,existingEvent.Capacity.CapacityCount);
-        Assert.Contains("Event Capacity cannot be higher than the location Capacity", setMaxGuest.Errors);
+        Assert.Contains("Event Capacity cannot be exceed the location Capacity", setMaxGuest.Errors);
     }
     
     [Theory]
@@ -134,7 +146,7 @@ public class SetMaxGuestsTests
     public void SetMaxGuest_InvalidValues_DraftStatus_ReturnsFailureResult(int maxGuests) // F3
     {
         // Arrange
-        var createEventResult  = EventFactory.CreateEventInCancelledStatus(); 
+        var createEventResult  = EventFactory.CreateEventInDraftStatus(); 
         if (!createEventResult.IsSuccess)
         {
             Assert.Fail("Event creation failed: " + string.Join(", ", createEventResult.Errors)); 
@@ -147,7 +159,7 @@ public class SetMaxGuestsTests
         var roomCap = existingEvent;
         
         // Act
-        var setMaxGuest = existingEvent.setMaximumNumberGuests(maxGuests);
+        var setMaxGuest = existingEvent.SetMaximumNumberGuests(maxGuests);
 
         // Assert
         Assert.False(setMaxGuest.IsSuccess); 

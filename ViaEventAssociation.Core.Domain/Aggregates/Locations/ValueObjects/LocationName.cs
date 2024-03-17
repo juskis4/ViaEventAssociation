@@ -4,7 +4,8 @@ namespace ViaEventAssociation.Core.Domain.Aggregates.Locations;
 
 public class LocationName
 {
-    private string Name { get; }
+    public string Name { get; private set; }
+
     private LocationName(string name)
     {
         Name = name;

@@ -5,7 +5,7 @@ namespace ViaEventAssociation.Core.Domain.Aggregates.Locations;
 
 public class LocationId
 {
-    private int Id { get; }
+    public int Id { get; }
 
     private LocationId(int id)
     {
@@ -25,6 +25,12 @@ public class LocationId
 
     private static Result Validate(int id)
     {
-        return Result.Success();
+        var errors = new List<string>();
+        if (id < 0)
+        {
+            errors.Add("Id cannot be negative");
+        }
+
+        return errors.Any() ? Result.Failure(errors.ToArray()) : Result.Success();
     }
 }

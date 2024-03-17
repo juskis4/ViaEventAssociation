@@ -4,33 +4,50 @@ namespace ViaEventAssociation.Core.Domain.Aggregates.Locations;
 
 public class Location
 {
-    private LocationName _name;
-    private Capacity _capacity;
-    private Address _address;
-    private bool _available = true;
+    public  LocationName name { get; set; }
+    public LocationCapacity capacity { get; set; }
+    public Address address { get; }
+    public bool available { get; set; } = true;
 
-    public Location(LocationName name, Capacity capacity, Address address)
-    {
-        _name = name;
-        _capacity = capacity;
-        _address = address;
+    private Location(LocationName name, LocationCapacity capacity, Address address)
+    { 
+        this.name = name;
+        this.capacity = capacity;
+        this.address = address;
     }
 
-    public Result SetMaximumNumberOfPeople(Capacity capacity)
+    public static Result<Location> Create(LocationId id, Address address, LocationName name, LocationCapacity capacity)
     {
-        _capacity = capacity;
+        return Result<Location>.Success(new Location(name, capacity, address));
+    }
+
+    public Result SetMaximumNumberOfPeople(int capacity)
+    {
+        var capResult = LocationCapacity.Create(capacity);
+        if (!capResult.IsSuccess)
+        {
+            return Result.Failure(capResult.Errors.ToArray());
+        }
+
+        this.capacity = capResult.Data;
         return Result.Success();
     }
 
-    public Result UpdateLocationName(LocationName name)
+    public Result UpdateLocationName(string name)
     {
-        _name = name;
+        var locationNameResult = LocationName.Create(name);
+        if (!locationNameResult.IsSuccess)
+        {
+            return Result.Failure(locationNameResult.Errors.ToArray());
+        }
+
+        this.name = locationNameResult.Data;
         return Result.Success();
     }
 
     public Result SetAvailability(bool availability)
     {
-        _available = availability;
+        this.available = availability;
         return Result.Success();
     }
 
