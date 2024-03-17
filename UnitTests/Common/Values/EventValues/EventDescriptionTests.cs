@@ -35,10 +35,8 @@ public class EventDescriptionTests
         Assert.Equal(descriptionText, result.Data.DescriptionText);
     }
 
-    // Failure Scenarios 
-
     [Fact]
-    public void Create_NullDescription_ReturnsFailureResult()
+    public void Create_NullDescription_ReturnsSuccessResult_WithDefaultValue() 
     {
         // Arrange
         string descriptionText = null;
@@ -47,12 +45,12 @@ public class EventDescriptionTests
         var result = Description.Create(descriptionText);
 
         // Assert
-        Assert.False(result.IsSuccess);
-        Assert.Contains("Description cannot be null or empty.", result.Errors);
+        Assert.True(result.IsSuccess); 
+        Assert.Equal("No description provided.", result.Data.DescriptionText); 
     }
 
     [Fact]
-    public void Create_EmptyDescription_ReturnsFailureResult()
+    public void Create_EmptyDescription_ReturnsSuccessResult_WithDefaultValue()  
     {
         // Arrange
         string descriptionText = "";
@@ -61,9 +59,11 @@ public class EventDescriptionTests
         var result = Description.Create(descriptionText);
 
         // Assert
-        Assert.False(result.IsSuccess);
-        Assert.Contains("Description cannot be null or empty.", result.Errors);
+        Assert.True(result.IsSuccess); 
+        Assert.Equal("No description provided.", result.Data.DescriptionText); 
     }
+
+    // Failure Scenarios 
 
     [Fact]
     public void Create_DescriptionExceedingMaxLength_ReturnsFailureResult()
