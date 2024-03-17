@@ -1,6 +1,6 @@
 # Completed Feature Status
 
-* [ ] **ValueObject base**
+* [x] **ValueObject base**
 * [ ] **Entity base**
 * [ ] **Aggregate Base**
 * [x] **UC1 - Create Event**
@@ -45,12 +45,12 @@
 * [x] **UC5 - Make Event Public**
   * [x] S1
   * [x] F1
-* [ ] **UC6 - Make Event Private**
-  * [ ] S1
-  * [ ] S2
-  * [ ] F1
-  * [ ] F2
-* [ ] **UC7 - Set Max Number Of Guests**
+* [x] **UC6 - Make Event Private**
+  * [x] S1
+  * [x] S2
+  * [x] F1
+  * [x] F2
+* [x] **UC7 - Set Max Number Of Guests**
   * [x] S1
   * [x] S2
   * [x] S3
@@ -59,3 +59,15 @@
   * [x] F3
   * [x] F4
   * [x] F5
+* [x] **UC8 - Readies An Event**
+  * [x] S1
+  * [x] F1
+  * [x] F2
+  * [x] F3
+  * [x] F4
+* [x] **UC9 - Activate An Event**
+  * [x] S1
+  * [x] S2
+  * [x] S3
+  * [x] F1
+  * [x] F2
