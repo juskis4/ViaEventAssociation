@@ -116,7 +116,6 @@ public class ViaEvent
         {
             Status = Status.Draft;  
         } 
-        return Result.Success();
     }
 
 

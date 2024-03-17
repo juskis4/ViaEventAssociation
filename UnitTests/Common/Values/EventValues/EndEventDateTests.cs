@@ -7,12 +7,12 @@ public class EndEventDateTests
 {
     // Success Scenarios
 
+    //BUG: DateTime.Now
     [Fact]
     public void Create_ValidFutureEndDate_ReturnsSuccessResult()
     {
         // Arrange
-        // Take the date of today and and make it tomorrow and put the time at 12.  
-        DateTime validEndDate = DateTime.Today.AddDays(2).AddHours(12); 
+        DateTime validEndDate = DateTime.Now.AddDays(2).Date.AddHours(15); 
 
         // Act
         var result = EndEventDate.Create(validEndDate);
@@ -22,12 +22,12 @@ public class EndEventDateTests
         Assert.Equal(validEndDate, result.Data.EndDateTime);
     }
 
-    //BUG: DateTime.Now .dummy fix to avoid failing test for now
+    //BUG: DateTime.Now
     [Fact]
     public void Create_EndDateTodayAtValidTime_ReturnsSuccessResult()
     {
         // Arrange
-        DateTime validEndDate = DateTime.Today.AddDays(1).AddHours(10);
+        DateTime validEndDate = DateTime.Now.Date.AddHours(21);
 
         // Act
         var result = EndEventDate.Create(validEndDate);

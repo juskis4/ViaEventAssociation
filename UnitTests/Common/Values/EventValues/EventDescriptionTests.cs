@@ -46,7 +46,7 @@ public class EventDescriptionTests
 
         // Assert
         Assert.True(result.IsSuccess); 
-        Assert.Equal("", result.Data.DescriptionText); 
+        Assert.Equal("No description provided.", result.Data.DescriptionText); 
     }
 
     [Fact]
@@ -60,7 +60,7 @@ public class EventDescriptionTests
 
         // Assert
         Assert.True(result.IsSuccess); 
-        Assert.Equal("", result.Data.DescriptionText); 
+        Assert.Equal("No description provided.", result.Data.DescriptionText); 
     }
 
     // Failure Scenarios 
