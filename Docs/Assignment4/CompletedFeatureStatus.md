@@ -18,13 +18,13 @@
   * [x] F4
   * [x] F5
   * [x] F6
-* [ ] **UC3 - Update Description**
-  * [ ] S1
-  * [ ] S2
-  * [ ] S3
-  * [ ] F1
-  * [ ] F2
-  * [ ] F3
+* [x] **UC3 - Update Description**
+  * [x] S1
+  * [x] S2
+  * [x] S3
+  * [x] F1
+  * [x] F2
+  * [x] F3
 * [ ] **UC4 - Update Time Of Event**
   * [ ] S1
   * [ ] S2
