@@ -8,7 +8,7 @@ public class FirstName
 
     private FirstName(string name)
     {
-        Name = name;
+        Name = char.ToUpper(name[0]) + name.Substring(1).ToLower();
     }
 
     public static Result<FirstName> Create(string name)
@@ -28,7 +28,14 @@ public class FirstName
         bool symbolCheck = name.Any(p => !char.IsLetterOrDigit(p));
         if (symbolCheck)
         {
-            errors.Add("First name cannot contains Special char.");
+            errors.Add("First name cannot contains Special characters.");
+        }
+
+        // Check for presence of numbers
+        bool numberCheck = name.Any(char.IsDigit);
+        if (numberCheck)
+        {
+            errors.Add("First name cannot contain numbers.");
         }
         
         if (string.IsNullOrEmpty(name))
@@ -41,14 +48,14 @@ public class FirstName
             errors.Add("First name cannot bee a white space.");
         }
 
-        if (name.Length < 3)
+        if (name.Length < 2)
         {
-            errors.Add("First name cannot be less than 3 characters.");
+            errors.Add("First name cannot be less than 2 characters.");
         }
 
-        if (name.Length > 16)
+        if (name.Length > 25)
         {
-            errors.Add("First name cannot be more than 16 characters.");
+            errors.Add("First name cannot be more than 25 characters.");
         }
 
         if (errors.Any())
