@@ -120,6 +120,15 @@ public class ViaEvent
             errors.Add("Event duration must be between 1 and 10 hours");
         }
 
+        if(!(newStartDate.Date.ToShortDateString() == newEndDate.Date.ToShortDateString()))
+        {
+            if(!(newStartDate.Date.AddDays(1) == newEndDate.Date) && newEndDate.Date.TimeOfDay > new TimeSpan(1, 0, 0))
+            {
+                // Event spans more than one day 
+                errors.Add("Rooms are not usable between 01:01 AM and 07:59 AM");
+            }
+        }
+
         if (!errors.Any())
         {
             StartDate = newStartDate;

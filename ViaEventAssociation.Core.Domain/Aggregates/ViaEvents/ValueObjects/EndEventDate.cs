@@ -26,13 +26,23 @@ public class EndEventDate
     {
         var errors = new List<string>();
 
-        // Boundary for allowed end time (00:59 AM the next day)
-        var allowedEndTime = date.Date.AddDays(1).AddSeconds(-1);  
+        // Allowed start time (8:00 AM on the same day)
+        var allowedStartTime = date.Date.AddHours(8);
 
-        if (date.TimeOfDay > allowedEndTime.TimeOfDay) 
+        // Allowed end time (1:00 AM the next day)
+        var allowedEndTime = date.Date.AddDays(1).AddHours(1);
+
+        if (date < DateTime.Today.AddHours(8))
+        {
+            errors.Add("Event end date cannot be in the past.");
+        }
+
+        // Check if end time is outside the allowed range 
+        if (date.TimeOfDay < allowedStartTime.TimeOfDay && date.TimeOfDay > allowedEndTime.TimeOfDay)
         {
             errors.Add("Event end time must fall within room usage hours (08:00 AM - 01:00 AM).");
         }
+
         return errors.Any() ? Result.Failure(errors.ToArray()) : Result.Success();
     }
 }

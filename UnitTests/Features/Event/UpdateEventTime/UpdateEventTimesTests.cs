@@ -211,10 +211,7 @@ public class UpdateEventTimesTests
     }
 
     [Theory]
-    [InlineData("2024/08/24 23:50", "2024/08/25 01:01")]
-    [InlineData("2024/08/24 22:00", "2024/08/25 07:59")]
-    [InlineData("2024/08/30 23:00", "2024/08/31 02:30")]
-    [InlineData("2024/08/30 23:59", "2024/08/31 08:01")] 
+    [InlineData("2024/08/30 23:59", "2024/08/31 08:01")]
     public void Update_RoomsAreClosed_ReturnsFailureResult(string start, string end)      // F6 and F11
     {
         // Arrange
@@ -242,6 +239,29 @@ public class UpdateEventTimesTests
         // Assert
         Assert.False(updateResult.IsSuccess);
         Assert.Contains("Rooms are not usable between 01:01 AM and 07:59 AM", updateResult.Errors);
+    }
+
+    [Theory]
+    [InlineData("2024/08/24 23:50", "2024/08/25 01:01")]
+    [InlineData("2024/08/24 22:00", "2024/08/25 07:59")]
+    [InlineData("2024/08/30 23:00", "2024/08/31 02:30")]
+    public void Update_RoomsAreClosed_EndEventDate_ReturnsFailureResult(string start,string end)       // F6 and F11
+    {
+        // Create StartEventDate 
+        var newStartDateResult = StartEventDate.Create(DateTime.Parse(start));
+        if (!newStartDateResult.IsSuccess)
+        {
+            Assert.Fail("Failed to create StartEventDate: " + string.Join(", ", newStartDateResult.Errors));
+            return;
+        }
+
+        // Create StartEventDate
+        var newEndDateResult = EndEventDate.Create(DateTime.Parse(end));
+
+        // Assert 
+        Assert.False(newEndDateResult.IsSuccess);
+        Assert.Contains("Event end time must fall within room usage hours (08:00 AM - 01:00 AM).", newEndDateResult.Errors);
+
     }
 
     [Theory]
