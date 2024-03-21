@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 using ViaEventAssociation.Core.Tools.OperationResult;
 
-namespace ViaEventAssociation.Core.Domain.Aggregates.Guests;
+namespace ViaEventAssociation.Core.Domain.Aggregates.Guests.ValueObjects;
 
 public class ViaEmail
 {

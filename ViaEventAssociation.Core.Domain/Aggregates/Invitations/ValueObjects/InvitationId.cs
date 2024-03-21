@@ -5,11 +5,11 @@ namespace ViaEventAssociation.Core.Domain.Aggregates.Invitations.ValueObjects;
 
 public class InvitationId
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; private set; }
 
     private InvitationId(Guid id)
     {
-        this.Id = id;
+        Id = id;
     }
 
     public static Result<InvitationId> Create()

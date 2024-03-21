@@ -1,6 +1,6 @@
 using ViaEventAssociation.Core.Tools.OperationResult;
 
-namespace ViaEventAssociation.Core.Domain.Aggregates.Events;
+namespace ViaEventAssociation.Core.Domain.Aggregates.Events.ValueObjects;
 
 public class EndEventDate
 {
@@ -31,7 +31,7 @@ public class EndEventDate
             errors.Add("Event end date cannot be in the past.");
         }
 
-        if (endDateTime.TimeOfDay < new TimeSpan(8, 0, 0) || 
+        if (endDateTime.TimeOfDay < new TimeSpan(8, 0, 0) ||  
             endDateTime.TimeOfDay >= new TimeSpan(13, 0, 0)) 
         {
             errors.Add("Event end time must be between 08:00 AM and 01:00 AM (next day).");

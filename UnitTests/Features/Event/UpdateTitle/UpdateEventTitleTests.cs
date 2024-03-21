@@ -1,7 +1,8 @@
 using ViaEventAssociation.Core.Domain.Aggregates.Events;
+using ViaEventAssociation.Core.Domain.Aggregates.Events.ValueObjects;
+using Xunit;
 
 namespace UnitTests.Features.Event.UpdateTitle;
-using Xunit;
 
 public class UpdateEventTitleTests
 {

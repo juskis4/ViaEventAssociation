@@ -1,15 +1,12 @@
-using System.Runtime.InteropServices.Marshalling;
 using UnitTests.Features.ViaLocations;
-using ViaEventAssociation.Core.Domain.Aggregates.Events;
-using ViaEventAssociation.Core.Tools.OperationResult;
 using Xunit;
+
 namespace UnitTests.Features.Event.SetMaxGuests;
 
 public class SetMaxGuestsTests
 {
     // Success Scenarios
 
-   
     [Theory]
     [InlineData(5)] 
     [InlineData(10)]

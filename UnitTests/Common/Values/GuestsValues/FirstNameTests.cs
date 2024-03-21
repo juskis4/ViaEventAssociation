@@ -2,6 +2,7 @@ namespace UnitTests.Common.Values.GuestsValues;
 
 
 using ViaEventAssociation.Core.Domain.Aggregates.Guests;
+using ViaEventAssociation.Core.Domain.Aggregates.Guests.ValueObjects;
 using Xunit;
 
 

@@ -1,7 +1,8 @@
 using ViaEventAssociation.Core.Domain.Aggregates.Events;
-namespace UnitTests.Features.Event.CreateEvent;
-
+using ViaEventAssociation.Core.Domain.Aggregates.Events.ValueObjects;
 using Xunit;
+
+namespace UnitTests.Features.Event.CreateEvent;
 
 public class CreateEventTests
 {

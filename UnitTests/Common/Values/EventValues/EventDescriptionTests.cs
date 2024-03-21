@@ -1,4 +1,5 @@
 using ViaEventAssociation.Core.Domain.Aggregates.Events;
+using ViaEventAssociation.Core.Domain.Aggregates.Events.ValueObjects;
 using Xunit;
 
 namespace ViaEventAssociation.Core.Tests.Domain.Aggregates.Events;
@@ -46,7 +47,7 @@ public class EventDescriptionTests
 
         // Assert
         Assert.True(result.IsSuccess); 
-        Assert.Equal("No description provided.", result.Data.DescriptionText); 
+        Assert.Equal("", result.Data.DescriptionText); 
     }
 
     [Fact]
@@ -60,7 +61,7 @@ public class EventDescriptionTests
 
         // Assert
         Assert.True(result.IsSuccess); 
-        Assert.Equal("No description provided.", result.Data.DescriptionText); 
+        Assert.Equal("", result.Data.DescriptionText); 
     }
 
     // Failure Scenarios 

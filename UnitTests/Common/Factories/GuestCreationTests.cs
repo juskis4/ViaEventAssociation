@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using ViaEventAssociation.Core.Domain.Aggregates.Guests;
-using ViaEventAssociation.Core.Domain.Common.Bases;
+using ViaEventAssociation.Core.Domain.Aggregates.Guests.ValueObjects;
 using Xunit;
 
 namespace UnitTests.Common.Factories;

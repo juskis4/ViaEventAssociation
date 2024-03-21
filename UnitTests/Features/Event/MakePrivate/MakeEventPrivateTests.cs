@@ -1,11 +1,11 @@
-using System.ComponentModel.DataAnnotations;
 using ViaEventAssociation.Core.Domain.Aggregates.Events;
+using Xunit;
 
 namespace UnitTests.Features.Event.MakePrivate;
-using Xunit;
+
 public class MakeEventPrivateTests
 {
-        [Fact]
+    [Fact]
     public void MakeEventPrivate_StatusIsDraft_ReturnsSuccess()
     {
         // Arrange  
@@ -18,7 +18,7 @@ public class MakeEventPrivateTests
         Assert.False(viaEvent.IsPublic);
         Assert.Equal(Status.Draft, viaEvent.Status);
     }
-    
+
     [Fact]
     public void MakeEventPublic_StatusIsReady_ReturnsSuccess()
     {
@@ -31,7 +31,7 @@ public class MakeEventPrivateTests
         Assert.Equal(Status.Draft, viaEvent.Status);
         Assert.False(viaEvent.IsPublic);
     }
-    
+
     [Fact]
     public void MakeEventPrivate_StatusIsActive_ReturnsFailure()
     {
@@ -45,7 +45,7 @@ public class MakeEventPrivateTests
         Assert.Equal(Status.Active, viaEvent.Status);
         Assert.Contains("a Active event cannot be modified", result.Errors);
     }
-    
+
     [Fact]
     public void MakeEventPrivate_StatusIsCancelled_ReturnsFailure()
     {
@@ -57,6 +57,6 @@ public class MakeEventPrivateTests
         Assert.False(result.IsSuccess);
         Assert.False(viaEvent.IsPublic);
         Assert.Equal(Status.Cancelled, viaEvent.Status);
-        Assert.Contains("a Cancelled event cannot be modified",result.Errors);
+        Assert.Contains("a Cancelled event cannot be modified", result.Errors);
     }
 }
