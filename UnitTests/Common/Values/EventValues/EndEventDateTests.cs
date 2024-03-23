@@ -1,4 +1,5 @@
 using ViaEventAssociation.Core.Domain.Aggregates.Events;
+using ViaEventAssociation.Core.Domain.Aggregates.Events.ValueObjects;
 using Xunit;
 
 namespace ViaEventAssociation.Core.Tests.Domain.Aggregates.Events;
@@ -25,7 +26,7 @@ public class EndEventDateTests
     public void Create_EndDateTodayAtValidTime_ReturnsSuccessResult()
     {
         // Arrange
-        DateTime validEndDate = DateTime.Today.AddHours(13);
+        DateTime validEndDate = DateTime.Today.Date.AddHours(21);
 
         // Act
         var result = EndEventDate.Create(validEndDate);
@@ -41,7 +42,7 @@ public class EndEventDateTests
     public void Create_EndDateInThePast_ReturnsFailureResult()
     {
         // Arrange
-        DateTime pastEndDate = DateTime.Today.AddHours(9).Subtract(TimeSpan.FromDays(1)); 
+        DateTime pastEndDate = DateTime.Today.Subtract(TimeSpan.FromDays(1)).AddHours(13); 
 
         // Act
         var result = EndEventDate.Create(pastEndDate);
@@ -69,7 +70,7 @@ public class EndEventDateTests
     public void Create_ValidDateButAt1am_ReturnsFailureResult()
     {
         // Arrange
-        DateTime invalidEndDate = DateTime.Today.AddDays(1).Date.AddHours(1).AddMinutes(1); 
+        DateTime invalidEndDate = DateTime.Today.AddDays(1).Date.AddHours(1); 
 
         // Act
         var result = EndEventDate.Create(invalidEndDate);

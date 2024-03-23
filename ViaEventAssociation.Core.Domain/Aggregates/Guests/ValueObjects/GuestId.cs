@@ -2,11 +2,11 @@
 using ViaEventAssociation.Core.Domain.Aggregates.Events;
 using ViaEventAssociation.Core.Tools.OperationResult;
 
-namespace ViaEventAssociation.Core.Domain.Common.Bases;
+namespace ViaEventAssociation.Core.Domain.Aggregates.Guests.ValueObjects;
 
 public class GuestId
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; private set; }
 
     private GuestId(Guid id)
     {

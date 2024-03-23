@@ -1,5 +1,8 @@
+using ViaEventAssociation.Core.Domain.Aggregates.Invitations;
 using ViaEventAssociation.Core.Domain.Aggregates.Locations;
 using ViaEventAssociation.Core.Tools.OperationResult;
+using ViaEventAssociation.Core.Domain.Aggregates.Events.ValueObjects;
+using ViaEventAssociation.Core.Domain.Aggregates.Guests.ValueObjects;
 
 namespace ViaEventAssociation.Core.Domain.Aggregates.Events;
 
@@ -21,11 +24,13 @@ public class ViaEvent
     public bool IsPublic { get; set; } = false;
     public EventId Id { get; set; }
     public Status Status { get; set; }
-    
-    public Location? Location { get; set; }
-    
-    private  ViaEvent(EventId id, EventName title, Description description,StartEventDate startDate, 
 
+    public Location? Location { get; set; }
+
+    private List<Invitation> _invitations = new();
+
+
+    private ViaEvent(EventId id, EventName title, Description description, StartEventDate startDate,
         EndEventDate endDate, Capacity capacity, bool isPublic, Status status)
     {
         Id = id;
@@ -155,7 +160,7 @@ public class ViaEvent
     // UC3 - Update Description
     public Result UpdateDescription(string newDescription)
     {
-        if (Status != Status.Draft && Status != Status.Ready) 
+        if (Status != Status.Draft && Status != Status.Ready)
         {
             return Result.Failure($"Event in status {Status} cannot be modified.");
         }
@@ -171,9 +176,9 @@ public class ViaEvent
         // UC3 - S3
         if (Status == Status.Ready)
         {
-            Status = Status.Draft;  
-        } 
-       return Result.Success();
+            Status = Status.Draft;
+        }
+        return Result.Success();
     }
 
 
@@ -187,7 +192,7 @@ public class ViaEvent
 
         return Result.Success();
     }
-    
+
     //UC7
     public Result SetMaximumNumberGuests(int maxGuests)
     {
@@ -214,7 +219,7 @@ public class ViaEvent
         Capacity = capacityResult.Data;
         return Result.Success();
     }
-    
+
 
 
     public Result MakeEventPrivate()
@@ -228,4 +233,24 @@ public class ViaEvent
 
         return Result.Success();
     }
+
+
+    // UC-13
+    public Result InviteGuest(GuestId guestId)
+    {
+        if (Status == Status.Cancelled || Status == Status.Draft)
+        {
+            return Result.Failure($"Guests can only be invited to the event, when the event is ready or active");
+        }
+
+        // TODO: add validation for capacity
+
+        var invitation = Invitation.Create(guestId, Id);
+
+        _invitations.Add(invitation.Data);
+
+        return Result.Success();
+    }
+
 }
+

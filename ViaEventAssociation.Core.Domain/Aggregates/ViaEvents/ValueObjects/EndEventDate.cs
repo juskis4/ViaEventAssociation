@@ -1,6 +1,6 @@
 using ViaEventAssociation.Core.Tools.OperationResult;
 
-namespace ViaEventAssociation.Core.Domain.Aggregates.Events;
+namespace ViaEventAssociation.Core.Domain.Aggregates.Events.ValueObjects;
 
 public class EndEventDate
 {
@@ -37,8 +37,8 @@ public class EndEventDate
             errors.Add("Event end date cannot be in the past.");
         }
 
-        // Check if end time is outside the allowed range 
-        if (date.TimeOfDay < allowedStartTime.TimeOfDay && date.TimeOfDay > allowedEndTime.TimeOfDay)
+        if (endDateTime.TimeOfDay < new TimeSpan(8, 0, 0) ||  
+            endDateTime.TimeOfDay >= new TimeSpan(13, 0, 0)) 
         {
             errors.Add("Event end time must fall within room usage hours (08:00 AM - 01:00 AM).");
         }

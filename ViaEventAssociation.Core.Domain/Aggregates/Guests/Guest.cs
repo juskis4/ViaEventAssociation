@@ -1,6 +1,6 @@
 
 
-using ViaEventAssociation.Core.Domain.Common.Bases;
+using ViaEventAssociation.Core.Domain.Aggregates.Guests.ValueObjects;
 using ViaEventAssociation.Core.Tools.OperationResult;
 
 namespace ViaEventAssociation.Core.Domain.Aggregates.Guests;

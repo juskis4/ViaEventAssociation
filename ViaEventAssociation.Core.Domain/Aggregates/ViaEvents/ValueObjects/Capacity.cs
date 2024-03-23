@@ -1,6 +1,6 @@
 using ViaEventAssociation.Core.Tools.OperationResult;
 
-namespace ViaEventAssociation.Core.Domain.Aggregates.Events;
+namespace ViaEventAssociation.Core.Domain.Aggregates.Events.ValueObjects;
 
 public class Capacity
 {

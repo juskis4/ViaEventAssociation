@@ -1,5 +1,6 @@
 using ViaEventAssociation.Core.Domain.Aggregates.Locations;
 using Xunit;
+
 namespace UnitTests.Features.ViaLocations.AddNewLocation;
 
 public class CreateLocationTests

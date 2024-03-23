@@ -1,4 +1,4 @@
-using ViaEventAssociation.Core.Domain.Common.Bases;
+using ViaEventAssociation.Core.Domain.Aggregates.Guests.ValueObjects;
 using Xunit;
 
 namespace UnitTests.Common.Values.GuestsValues;
