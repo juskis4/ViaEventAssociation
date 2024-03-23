@@ -11,7 +11,7 @@ public class StartEventDateTests
     public void Create_ValidFutureDate_ReturnsSuccessResult()
     {
         // Arrange
-        DateTime validDate = DateTime.Now.AddDays(2).Date.AddHours(10);
+        DateTime validDate = DateTime.Today.AddDays(2).Date.AddHours(10);
 
         // Act
         var result = StartEventDate.Create(validDate);
@@ -21,13 +21,11 @@ public class StartEventDateTests
         Assert.Equal(validDate, result.Data.Date);
     }
 
-    // BUG: This test is failing because of the DateTime.Now
     [Fact]
     public void Create_DateTodayAtValidTime_ReturnsSuccessResult()
     {
         // Arrange
-        var frozenNow = DateTime.Now;
-        DateTime validDate = frozenNow.AddHours(15);
+        DateTime validDate = DateTime.Today.AddHours(15);
 
         // Act
         var result = StartEventDate.Create(validDate);
@@ -44,7 +42,7 @@ public class StartEventDateTests
     public void Create_DateInThePast_ReturnsFailureResult()
     {
         // Arrange
-        DateTime pastDate = DateTime.Now.Subtract(TimeSpan.FromDays(1));
+        DateTime pastDate = DateTime.Today.AddHours(9).Subtract(TimeSpan.FromDays(1));
 
         // Act
         var result = StartEventDate.Create(pastDate);
@@ -58,27 +56,27 @@ public class StartEventDateTests
     public void Create_ValidDateButBefore8am_ReturnsFailureResult()
     {
         // Arrange
-        DateTime invalidDate = DateTime.Now.AddDays(1).Date.AddHours(7); 
+        DateTime invalidDate = DateTime.Today.AddDays(1).Date.AddHours(7); 
 
         // Act
         var result = StartEventDate.Create(invalidDate);
 
         // Assert
         Assert.False(result.IsSuccess);
-        Assert.Contains("Event start time must be between 08:00 AM and 11:59 PM.", result.Errors);
+        Assert.Contains("Event start time must be after 08:00 AM", result.Errors);
     }
 
     [Fact]
     public void Create_ValidDateButAtMidnight_ReturnsFailureResult()
     {
          // Arrange
-        DateTime invalidDate = DateTime.Now.AddDays(1).Date;
+        DateTime invalidDate = DateTime.Today.AddDays(1).AddHours(4);
 
         // Act
         var result = StartEventDate.Create(invalidDate);
 
         // Assert
         Assert.False(result.IsSuccess);
-        Assert.Contains("Event start time must be between 08:00 AM and 11:59 PM.", result.Errors);
+        Assert.Contains("Event start time must be after 08:00 AM", result.Errors);
     }
 }
