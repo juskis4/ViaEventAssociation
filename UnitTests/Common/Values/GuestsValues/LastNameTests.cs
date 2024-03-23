@@ -12,28 +12,11 @@ public class LastNameTests
         public void Create_ValidName_ReturnsSuccessResult()
         {
             // Arrange
-            Result<LastName> result = LastName.Create("John");
+            Result<LastName> result = LastName.Create("john");
             
             Assert.True(result.IsSuccess);
             Assert.Equal("John",result.Data.Name);
         }
-        //TODO: find a way to null values.
-        /*
-        [Fact]
-        public void Create_NullName_ReturnsFailureResult()
-        {
-            // Arrange
-            string name = null ;
-            
-            //Act
-            var result = LastName.Create(name);
-
-            // Assert
-            Assert.False(result.IsSuccess);
-            Assert.Contains("First name cannot be NULL or Empty.", result.Errors);
-
-        }
-        */
 
         [Fact]
         public void Create_EmptyName_ReturnsFailureResult()
@@ -72,11 +55,11 @@ public class LastNameTests
         public void Create_NameTooLong_ReturnsFailureResult()
         {
             // Arrange
-            var result = LastName.Create("ThisIsALongFirstName");
+            var result = LastName.Create("ThisIsALongFirstNameThisIsALongFirstName");
 
             // Assert
             Assert.False(result.IsSuccess);
-            Assert.Contains("Last name cannot be more than 16 characters.", result.Errors);
+            Assert.Contains("Last name cannot be more than 25 characters.", result.Errors);
         }
         
         [Fact]
@@ -87,6 +70,17 @@ public class LastNameTests
 
             // Assert
             Assert.False(result.IsSuccess);
-            Assert.Contains("Last name cannot contains Special char.", result.Errors);
+            Assert.Contains("Last name cannot contains Special characters.", result.Errors);
+        }
+        
+        [Fact]
+        public void Create_containsNumbers_ReturnsFailureResult()
+        {
+            // Arrange
+            var result = LastName.Create("Jhon1");
+
+            // Assert
+            Assert.False(result.IsSuccess);
+            Assert.Contains("Last name cannot contain numbers.", result.Errors);
         }
 }
