@@ -4,7 +4,7 @@ namespace ViaEventAssociation.Core.Domain.Aggregates.Events.ValueObjects;
 
 public class StartEventDate
 {
-    public DateTime Date { get; private set; } 
+    public DateTime Date { get; private set; }
 
     private StartEventDate(DateTime date)
     {
@@ -26,15 +26,19 @@ public class StartEventDate
     {
         var errors = new List<string>();
 
-        if (date < DateTime.Now)  
+        if (date < DateTime.Today.AddHours(8))
         {
             errors.Add("Event start date cannot be in the past.");
         }
 
-        if (date.TimeOfDay < new TimeSpan(8, 0, 0) || 
-            date.TimeOfDay >= new TimeSpan(23, 59, 59)) 
+        if (date.TimeOfDay < new TimeSpan(8, 0, 0))
         {
-            errors.Add("Event start time must be between 08:00 AM and 11:59 PM.");
+            errors.Add("Event start time must be after 08:00 AM");
+        }
+
+        if (date.TimeOfDay >= new TimeSpan(23, 59, 59))
+        {
+            errors.Add("Event start time must be before midnight");
         }
 
         return errors.Any() ? Result.Failure(errors.ToArray()) : Result.Success();

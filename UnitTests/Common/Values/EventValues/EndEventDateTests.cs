@@ -8,7 +8,6 @@ public class EndEventDateTests
 {
     // Success Scenarios
 
-    //BUG: DateTime.Now
     [Fact]
     public void Create_ValidFutureEndDate_ReturnsSuccessResult()
     {
@@ -20,10 +19,9 @@ public class EndEventDateTests
 
         // Assert
         Assert.True(result.IsSuccess);
-        Assert.Equal(validEndDate, result.Data.EndDateTime);
+        Assert.Equal(validEndDate, result.Data.Date);
     }
 
-    //BUG: DateTime.Now
     [Fact]
     public void Create_EndDateTodayAtValidTime_ReturnsSuccessResult()
     {
@@ -35,7 +33,7 @@ public class EndEventDateTests
 
         // Assert
         Assert.True(result.IsSuccess);
-        Assert.Equal(validEndDate, result.Data.EndDateTime);
+        Assert.Equal(validEndDate, result.Data.Date);
     }
 
     // Failure Scenarios
@@ -65,7 +63,7 @@ public class EndEventDateTests
 
         // Assert
         Assert.False(result.IsSuccess);
-        Assert.Contains("Event end time must be between 08:00 AM and 01:00 AM (next day).", result.Errors);
+        Assert.Contains("Event end time must fall within room usage hours (08:00 AM - 01:00 AM).", result.Errors);
     }
 
     [Fact]
@@ -79,9 +77,6 @@ public class EndEventDateTests
 
         // Assert
         Assert.False(result.IsSuccess);
-        Assert.Contains("Event end time must be between 08:00 AM and 01:00 AM (next day).", result.Errors);
+        Assert.Contains("Event end time must fall within room usage hours (08:00 AM - 01:00 AM).", result.Errors);
     }
-
-    // TODO: Tests for ensuring end date is after the start date 
-    // TODO: Tests for event duration not exceeding 10 hours
 }

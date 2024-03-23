@@ -27,7 +27,6 @@ public class ViaEvent
 
     public Location? Location { get; set; }
 
-
     private List<Invitation> _invitations = new();
 
 
@@ -104,6 +103,58 @@ public class ViaEvent
         }
 
         return Result.Failure($"an {stats} event cannot be modified");
+    }
+
+    public Result UpdateEventTimes(StartEventDate newStartDate, EndEventDate newEndDate)
+    {
+        var errors = new List<string>();
+
+        if (Status != Status.Draft && Status != Status.Ready)
+        {
+            errors.Add("Event cannot be modified in its current status");
+        }
+
+        if (newStartDate.Date > newEndDate.Date)
+        {
+            errors.Add("Start date cannot be after end date");
+        }
+
+        // Check if the start date is the same as the end date but the start time is after the end time
+        if (newStartDate.Date.Date == newEndDate.Date.Date && newStartDate.Date.TimeOfDay >= newEndDate.Date.TimeOfDay)
+        {
+            errors.Add("Start time must be before end time on the same day");
+        }
+
+        // Duration check
+        var duration = newEndDate.Date.Subtract(newStartDate.Date);
+        if (duration.TotalHours < 1 || duration.TotalHours > 10)
+        {
+            errors.Add("Event duration must be between 1 and 10 hours");
+        }
+
+        if(!(newStartDate.Date.ToShortDateString() == newEndDate.Date.ToShortDateString()))
+        {
+            if(!(newStartDate.Date.AddDays(1) == newEndDate.Date) && newEndDate.Date.TimeOfDay > new TimeSpan(1, 0, 0))
+            {
+                // Event spans more than one day 
+                errors.Add("Rooms are not usable between 01:01 AM and 07:59 AM");
+            }
+        }
+
+        if (!errors.Any())
+        {
+            StartDate = newStartDate;
+            EndDate = newEndDate;
+
+            if (Status == Status.Ready)
+            {
+                Status = Status.Draft;
+            }
+
+            return Result.Success();
+        }
+
+        return Result.Failure(errors.ToArray());
     }
 
     // UC3 - Update Description
