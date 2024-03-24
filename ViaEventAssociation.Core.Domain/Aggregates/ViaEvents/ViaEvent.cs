@@ -1,4 +1,7 @@
+
+using System.Xml.XPath;
 using ViaEventAssociation.Core.Domain.Aggregates.Invitations;
+
 using ViaEventAssociation.Core.Domain.Aggregates.Locations;
 using ViaEventAssociation.Core.Tools.OperationResult;
 using ViaEventAssociation.Core.Domain.Aggregates.Events.ValueObjects;
@@ -19,8 +22,8 @@ public class ViaEvent
     public EventName Title { get; set; }
     public Capacity Capacity { get; set; }
     public Description Description { get; set; }
-    public EndEventDate EndDate { get; set; }
-    public StartEventDate StartDate { get; set; }
+    public EndEventDate? EndDate { get; set; }
+    public StartEventDate? StartDate { get; set; }
     public bool IsPublic { get; set; } = false;
     public EventId Id { get; set; }
     public Status Status { get; set; }
@@ -176,8 +179,10 @@ public class ViaEvent
         // UC3 - S3
         if (Status == Status.Ready)
         {
+
             Status = Status.Draft;
         }
+
         return Result.Success();
     }
 
@@ -231,6 +236,58 @@ public class ViaEvent
         IsPublic = false;
         Status = Status.Draft;
 
+        return Result.Success();
+    }
+
+    public Result Readies ()
+    {
+        if (Status == Status.Ready)
+        {
+            return Result.Success();
+        }
+        var errors = new List<string>();
+        if (Status != Status.Draft)
+        {
+            return Result.Failure($"The event must be in Draft status to readies. this Event is in {Status} status");
+        }
+        if (StartDate == null)
+        {
+            errors.Add("Cannot readies this event Start Date is missing.");
+        }
+        if (EndDate == null)
+        {
+            errors.Add("Cannot readies this event End Date is missing.");
+        }
+        if (Title.Title.Equals( "Working Title"))
+        {
+            errors.Add("Event title cannot be Working Title (default), please update the title");
+        }
+        if (errors.Any())
+        {
+            return Result.Failure(errors.ToArray());
+        }
+        Status = Status.Ready;
+        return Result.Success();
+    }
+    
+    public Result Activate()
+    {
+        if (Status == Status.Active)
+        {
+            return Result.Success();
+        }
+        
+        if (Status != Status.Active)
+        {
+            var result = Readies();
+            if (!result.IsSuccess)
+            {
+                return Result.Failure(result.Errors.ToArray());
+            }
+        }
+
+
+        Status = Status.Active;
         return Result.Success();
     }
 
