@@ -45,9 +45,9 @@ public class Location
         return Result.Success();
     }
 
-    public Result SetAvailability(bool availability)
+    public Result SetAvailability(bool available)
     {
-        this.available = availability;
+        this.available = available;
         return Result.Success();
     }
 

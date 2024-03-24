@@ -1,11 +1,12 @@
 using ViaEventAssociation.Core.Domain.Aggregates.Events;
+using ViaEventAssociation.Core.Domain.Aggregates.Events.ValueObjects;
 
 namespace UnitTests.Features.Event.ReadiesEvent;
 using Xunit;
 public class ReadiesEventTests
 {
     [Fact]
-    public void ReadiesEvent_ValidDataAndDraftStatus_ReturnsSuccess()
+    public void ReadiesEvent_ValidDataAndDraftStatus_ReturnsSuccessResult()
     {
         // Arrange
         var viaEvent = EventFactory.CreateEventInDraftStatus().Data;
@@ -17,7 +18,7 @@ public class ReadiesEventTests
     }
     
     [Fact]
-    public void ReadiesEvent_ValidDataAndReadyStatus_ReturnsSuccess()
+    public void ReadiesEvent_ValidDataAndReadyStatus_ReturnsSuccessResult()
     {
         // Arrange
         var viaEvent = EventFactory.CreateEventInReadyStatus().Data;
@@ -29,7 +30,7 @@ public class ReadiesEventTests
     }
     
     [Fact]
-    public void ReadiesEvent_InValidDataAndDraftStatus_ReturnsFailure()
+    public void ReadiesEvent_InValidDataAndDraftStatus_ReturnsFailureResult()
     {
         // Arrange
         var id = EventId.Create(Guid.NewGuid().ToString()).Data;
@@ -43,7 +44,7 @@ public class ReadiesEventTests
     }
     
     [Fact]
-    public void ReadiesEvent_ValidDataAndCancelledStatus_ReturnsFailure()
+    public void ReadiesEvent_ValidDataAndCancelledStatus_ReturnsFailureResult()
     {
         // Arrange
         var viaEvent = EventFactory.CreateEventInCancelledStatus().Data;
@@ -56,7 +57,7 @@ public class ReadiesEventTests
     }
     
     [Fact]
-    public void ReadiesEvent_ValidDataAndActiveStatus_ReturnsFailure()
+    public void ReadiesEvent_ValidDataAndActiveStatus_ReturnsFailureResult()
     {
         // Arrange
         var viaEvent = EventFactory.CreateEventInActiveStatus().Data;
@@ -69,7 +70,7 @@ public class ReadiesEventTests
     }
     
     [Fact]
-    public void ReadiesEvent_DefaultTitleAndDraftStatus_ReturnsFailure()
+    public void ReadiesEvent_DefaultTitleAndDraftStatus_ReturnsFailureResult()
     {
         // Arrange
         var id = EventId.Create(Guid.NewGuid().ToString()).Data;

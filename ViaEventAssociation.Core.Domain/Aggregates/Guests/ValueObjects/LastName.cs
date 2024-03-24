@@ -1,6 +1,6 @@
 using ViaEventAssociation.Core.Tools.OperationResult;
 
-namespace ViaEventAssociation.Core.Domain.Aggregates.Guests;
+namespace ViaEventAssociation.Core.Domain.Aggregates.Guests.ValueObjects;
 
 public class LastName 
 {
@@ -8,7 +8,7 @@ public class LastName
 
     private LastName(string name)
     {
-        Name = name;
+        Name = char.ToUpper(name[0]) + name.Substring(1).ToLower();
     }
 
     public static Result<LastName> Create(string name)
@@ -28,7 +28,14 @@ public class LastName
         bool symbolCheck = name.Any(p => !char.IsLetterOrDigit(p));
         if (symbolCheck)
         {
-            errors.Add("Last name cannot contains Special char.");
+            errors.Add("Last name cannot contains Special characters.");
+        }
+        
+        // Check for presence of numbers
+        bool numberCheck = name.Any(char.IsDigit);
+        if (numberCheck)
+        {
+            errors.Add("Last name cannot contain numbers.");
         }
         
         if (string.IsNullOrEmpty(name))
@@ -46,9 +53,9 @@ public class LastName
             errors.Add("Last name cannot be less than 2 characters.");
         }
 
-        if (name.Length > 16)
+        if (name.Length > 25)
         {
-            errors.Add("Last name cannot be more than 16 characters.");
+            errors.Add("Last name cannot be more than 25 characters.");
         }
 
         if (errors.Any())

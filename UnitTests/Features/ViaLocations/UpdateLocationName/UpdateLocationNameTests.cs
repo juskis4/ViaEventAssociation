@@ -1,7 +1,7 @@
-using System.Runtime.InteropServices;
+using Xunit;
 
 namespace UnitTests.Features.ViaLocations.UpdateLocationName;
-using Xunit;
+
 public class UpdateLocationNameTests
 {
     [Theory]

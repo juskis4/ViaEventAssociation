@@ -1,6 +1,11 @@
+
 using System.Xml.XPath;
+using ViaEventAssociation.Core.Domain.Aggregates.Invitations;
+
 using ViaEventAssociation.Core.Domain.Aggregates.Locations;
 using ViaEventAssociation.Core.Tools.OperationResult;
+using ViaEventAssociation.Core.Domain.Aggregates.Events.ValueObjects;
+using ViaEventAssociation.Core.Domain.Aggregates.Guests.ValueObjects;
 
 namespace ViaEventAssociation.Core.Domain.Aggregates.Events;
 
@@ -22,15 +27,18 @@ public class ViaEvent
     public bool IsPublic { get; set; } = false;
     public EventId Id { get; set; }
     public Status Status { get; set; }
-    
+
     public Location? Location { get; set; }
-    
-    private  ViaEvent(EventId id, EventName title, Description description,StartEventDate startDate, 
+
+    private List<Invitation> _invitations = new();
+
+
+    private ViaEvent(EventId id, EventName title, Description description, StartEventDate startDate,
         EndEventDate endDate, Capacity capacity, bool isPublic, Status status)
     {
         Id = id;
         Capacity = capacity;
-        Description = description; 
+        Description = description;
         EndDate = endDate;
         StartDate = startDate;
         IsPublic = isPublic;
@@ -39,8 +47,8 @@ public class ViaEvent
         Location = null;
 
     }
-    
-    private  ViaEvent(EventId id,EventName title, Description description,Capacity capacity , bool isPublic = false)
+
+    private ViaEvent(EventId id, EventName title, Description description, Capacity capacity, bool isPublic = false)
     {
         Id = id;
         Capacity = capacity;
@@ -49,9 +57,9 @@ public class ViaEvent
         Title = title;
         Status = Status.Draft;
     }
-    
-    
-    
+
+
+
     public static Result<ViaEvent> Create(EventId id)
     {
         var errors = new List<string>();
@@ -75,15 +83,15 @@ public class ViaEvent
     }
 
     public static Result<ViaEvent> Create(EventId id, EventName title, Description description,
-        StartEventDate startDate,EndEventDate endDate, Capacity capacity, bool isPublic, Status status)
+        StartEventDate startDate, EndEventDate endDate, Capacity capacity, bool isPublic, Status status)
     {
         return Result<ViaEvent>.Success(
             new ViaEvent(id, title, description, startDate, endDate, capacity, isPublic, status));
     }
 
-    public static Result UpdateEventTitle(ViaEvent viaEvent,string newTitle)
+    public static Result UpdateEventTitle(ViaEvent viaEvent, string newTitle)
     {
-        
+
         var stats = viaEvent.Status;
         if (stats == Status.Draft || stats == Status.Ready)
         {
@@ -100,10 +108,62 @@ public class ViaEvent
         return Result.Failure($"an {stats} event cannot be modified");
     }
 
+    public Result UpdateEventTimes(StartEventDate newStartDate, EndEventDate newEndDate)
+    {
+        var errors = new List<string>();
+
+        if (Status != Status.Draft && Status != Status.Ready)
+        {
+            errors.Add("Event cannot be modified in its current status");
+        }
+
+        if (newStartDate.Date > newEndDate.Date)
+        {
+            errors.Add("Start date cannot be after end date");
+        }
+
+        // Check if the start date is the same as the end date but the start time is after the end time
+        if (newStartDate.Date.Date == newEndDate.Date.Date && newStartDate.Date.TimeOfDay >= newEndDate.Date.TimeOfDay)
+        {
+            errors.Add("Start time must be before end time on the same day");
+        }
+
+        // Duration check
+        var duration = newEndDate.Date.Subtract(newStartDate.Date);
+        if (duration.TotalHours < 1 || duration.TotalHours > 10)
+        {
+            errors.Add("Event duration must be between 1 and 10 hours");
+        }
+
+        if(!(newStartDate.Date.ToShortDateString() == newEndDate.Date.ToShortDateString()))
+        {
+            if(!(newStartDate.Date.AddDays(1) == newEndDate.Date) && newEndDate.Date.TimeOfDay > new TimeSpan(1, 0, 0))
+            {
+                // Event spans more than one day 
+                errors.Add("Rooms are not usable between 01:01 AM and 07:59 AM");
+            }
+        }
+
+        if (!errors.Any())
+        {
+            StartDate = newStartDate;
+            EndDate = newEndDate;
+
+            if (Status == Status.Ready)
+            {
+                Status = Status.Draft;
+            }
+
+            return Result.Success();
+        }
+
+        return Result.Failure(errors.ToArray());
+    }
+
     // UC3 - Update Description
     public Result UpdateDescription(string newDescription)
     {
-        if (Status != Status.Draft && Status != Status.Ready) 
+        if (Status != Status.Draft && Status != Status.Ready)
         {
             return Result.Failure($"Event in status {Status} cannot be modified.");
         }
@@ -119,8 +179,10 @@ public class ViaEvent
         // UC3 - S3
         if (Status == Status.Ready)
         {
-            Status = Status.Draft;  
-        } 
+
+            Status = Status.Draft;
+        }
+
         return Result.Success();
     }
 
@@ -135,7 +197,7 @@ public class ViaEvent
 
         return Result.Success();
     }
-    
+
     //UC7
     public Result SetMaximumNumberGuests(int maxGuests)
     {
@@ -162,7 +224,7 @@ public class ViaEvent
         Capacity = capacityResult.Data;
         return Result.Success();
     }
-    
+
 
 
     public Result MakeEventPrivate()
@@ -230,4 +292,22 @@ public class ViaEvent
     }
 
 
+    // UC-13
+    public Result InviteGuest(GuestId guestId)
+    {
+        if (Status == Status.Cancelled || Status == Status.Draft)
+        {
+            return Result.Failure($"Guests can only be invited to the event, when the event is ready or active");
+        }
+
+        // TODO: add validation for capacity
+
+        var invitation = Invitation.Create(guestId, Id);
+
+        _invitations.Add(invitation.Data);
+
+        return Result.Success();
+    }
+
 }
+

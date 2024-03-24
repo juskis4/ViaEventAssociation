@@ -1,4 +1,5 @@
 using ViaEventAssociation.Core.Domain.Aggregates.Events;
+using ViaEventAssociation.Core.Domain.Aggregates.Events.ValueObjects;
 using Xunit;
 
 namespace ViaEventAssociation.Core.Tests.Domain.Aggregates.Events;
