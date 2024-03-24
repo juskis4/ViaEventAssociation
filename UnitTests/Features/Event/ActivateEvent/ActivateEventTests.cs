@@ -6,7 +6,7 @@ using Xunit;
 public class ActivateEventTests
 {
         [Fact]
-    public void ReadiesEvent_ValidDataAndDraftStatus_ReturnsSuccess()
+    public void ReadiesEvent_ValidDataAndDraftStatus_ReturnsSuccessResult()
     {
         // Arrange
         var viaEvent = EventFactory.CreateEventInDraftStatus().Data;
@@ -18,7 +18,7 @@ public class ActivateEventTests
     }
     
     [Fact]
-    public void ReadiesEvent_ValidDataAndActiveStatus_ReturnsSuccess()
+    public void ReadiesEvent_ValidDataAndActiveStatus_ReturnsSuccessResult()
     {
         // Arrange
         var viaEvent = EventFactory.CreateEventInActiveStatus().Data;
@@ -30,7 +30,7 @@ public class ActivateEventTests
     }
     
     [Fact]
-    public void ReadiesEvent_ValidDataAndReadyStatus_ReturnsSuccess()
+    public void ReadiesEvent_ValidDataAndReadyStatus_ReturnsSuccessResult()
     {
         // Arrange
         var viaEvent = EventFactory.CreateEventInReadyStatus().Data;
@@ -42,7 +42,7 @@ public class ActivateEventTests
     }
     
     [Fact]
-    public void ReadiesEvent_InValidDataAndDraftStatus_ReturnsFailure()
+    public void ReadiesEvent_InValidDataAndDraftStatus_ReturnsFailureResult()
     {
         // Arrange
         var id = EventId.Create(Guid.NewGuid().ToString()).Data;
@@ -56,7 +56,7 @@ public class ActivateEventTests
     }
     
     [Fact]
-    public void ReadiesEvent_ValidDataAndCancelledStatus_ReturnsFailure()
+    public void ReadiesEvent_ValidDataAndCancelledStatus_ReturnsFailureResult()
     {
         // Arrange
         var viaEvent = EventFactory.CreateEventInCancelledStatus().Data;
@@ -71,7 +71,7 @@ public class ActivateEventTests
 
     
     [Fact]
-    public void ReadiesEvent_DefaultTitleAndDraftStatus_ReturnsFailure()
+    public void ReadiesEvent_DefaultTitleAndDraftStatus_ReturnsFailureResult()
     {
         // Arrange
         var id = EventId.Create(Guid.NewGuid().ToString()).Data;
