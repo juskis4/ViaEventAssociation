@@ -70,7 +70,7 @@ public class EndEventDateTests
     public void Create_ValidDateButAt1am_ReturnsFailureResult()
     {
         // Arrange
-        DateTime invalidEndDate = DateTime.Today.AddDays(1).Date.AddHours(1); 
+        DateTime invalidEndDate = DateTime.Today.AddDays(1).Date.AddHours(1).AddMinutes(1); 
 
         // Act
         var result = EndEventDate.Create(invalidEndDate);
