@@ -37,12 +37,13 @@ public class EndEventDate
             errors.Add("Event end date cannot be in the past.");
         }
 
-        if (endDateTime.TimeOfDay < new TimeSpan(8, 0, 0) ||  
-            endDateTime.TimeOfDay >= new TimeSpan(13, 0, 0)) 
+        // Check if end time is outside the allowed range 
+        if (date.TimeOfDay < allowedStartTime.TimeOfDay && date.TimeOfDay > allowedEndTime.TimeOfDay)
         {
             errors.Add("Event end time must fall within room usage hours (08:00 AM - 01:00 AM).");
         }
 
         return errors.Any() ? Result.Failure(errors.ToArray()) : Result.Success();
     }
+    
 }
