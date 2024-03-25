@@ -4,21 +4,23 @@ namespace ViaEventAssociation.Core.Domain.Aggregates.Locations;
 
 public class Location
 {
-    public  LocationName name { get; set; }
-    public LocationCapacity capacity { get; set; }
-    public Address address { get; }
-    public bool available { get; set; } = true;
+    public LocationId Id { get; set; }
+    public  LocationName Name { get; set; }
+    public LocationCapacity Capacity { get; set; }
+    public Address Address { get; }
+    public bool Available { get; set; } = true;
 
-    private Location(LocationName name, LocationCapacity capacity, Address address)
-    { 
-        this.name = name;
-        this.capacity = capacity;
-        this.address = address;
+    private Location(LocationId id, LocationName name, LocationCapacity capacity, Address address)
+    {
+        Id = id;
+        Name = name;
+        Capacity = capacity;
+        Address = address;
     }
 
     public static Result<Location> Create(LocationId id, Address address, LocationName name, LocationCapacity capacity)
     {
-        return Result<Location>.Success(new Location(name, capacity, address));
+        return Result<Location>.Success(new Location(id,name, capacity, address));
     }
 
     public Result SetMaximumNumberOfPeople(int capacity)
@@ -29,7 +31,7 @@ public class Location
             return Result.Failure(capResult.Errors.ToArray());
         }
 
-        this.capacity = capResult.Data;
+        Capacity = capResult.Data;
         return Result.Success();
     }
 
@@ -41,13 +43,13 @@ public class Location
             return Result.Failure(locationNameResult.Errors.ToArray());
         }
 
-        this.name = locationNameResult.Data;
+        Name = locationNameResult.Data;
         return Result.Success();
     }
 
     public Result SetAvailability(bool available)
     {
-        this.available = available;
+        Available = available;
         return Result.Success();
     }
 

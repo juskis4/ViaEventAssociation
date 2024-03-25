@@ -123,7 +123,7 @@ public class SetMaxGuestsTests
         var existingEvent = createEventResult.Data;
         var eventCap = existingEvent.Capacity.CapacityCount;
         //get room cap
-        var roomCap = createLocationResult.Data.capacity.Cap;
+        var roomCap = createLocationResult.Data.Capacity.Cap;
         //set event location 
         existingEvent.Location = createLocationResult.Data;
         

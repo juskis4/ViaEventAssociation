@@ -206,7 +206,7 @@ public class ViaEvent
             return Result.Failure("Capacity in active Event can only be increased");
         }
 
-        if (Location != null && maxGuests > Location.capacity.Cap)
+        if (Location != null && maxGuests > Location.Capacity.Cap)
         {
             return Result.Failure("Event Capacity cannot be exceed the location Capacity");
         }
