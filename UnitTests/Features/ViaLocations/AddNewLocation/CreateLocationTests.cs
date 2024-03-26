@@ -15,10 +15,11 @@ public class CreateLocationTests
 
         var location = Location.Create(id.Data, address.Data, name.Data, cap.Data).Data;
         
-        Assert.Equal(location.address,address.Data);
-        Assert.Equal(location.capacity, cap.Data);
-        Assert.Equal(location.name,name.Data);
-        Assert.True(location.available);
+        Assert.Equal(location.Id, id.Data);
+        Assert.Equal(location.Address,address.Data);
+        Assert.Equal(location.Capacity, cap.Data);
+        Assert.Equal(location.Name,name.Data);
+        Assert.True(location.Available);
         
     }
     

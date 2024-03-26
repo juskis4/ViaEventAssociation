@@ -5,9 +5,10 @@ namespace UnitTests.Features.ViaLocations.SetMaxCapacity;
 public class SetMaxCapacityTests
 {
     [Theory]
-    [InlineData(10)]
+    [InlineData(5)]
     [InlineData(100)]
-    [InlineData(900)]
+    [InlineData(250)]
+    [InlineData(999)]
     public void SetMaxCap_ValidValues_ResultSuccess(int capacity)
     {
         var newLocationResult =  LocationFactory.CreateAvailableLocation();
@@ -20,7 +21,7 @@ public class SetMaxCapacityTests
         var result = newLocationResult.Data.SetMaximumNumberOfPeople(capacity);
         
         Assert.True(result.IsSuccess);
-        Assert.Equal(capacity,newLocationResult.Data.capacity.Cap);
+        Assert.Equal(capacity,newLocationResult.Data.Capacity.Cap);
     }
     
     [Theory]
@@ -36,10 +37,10 @@ public class SetMaxCapacityTests
             return;
         }
 
-        int oldCap = newLocationResult.Data.capacity.Cap;
+        int oldCap = newLocationResult.Data.Capacity.Cap;
         var result = newLocationResult.Data.SetMaximumNumberOfPeople(capacity);
         
         Assert.False(result.IsSuccess);
-        Assert.Equal(oldCap,newLocationResult.Data.capacity.Cap);
+        Assert.Equal(oldCap,newLocationResult.Data.Capacity.Cap);
     }
 }

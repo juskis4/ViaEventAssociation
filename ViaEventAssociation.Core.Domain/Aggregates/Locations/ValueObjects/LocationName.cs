@@ -8,7 +8,7 @@ public class LocationName
 
     private LocationName(string name)
     {
-        Name = name;
+        Name = char.ToUpper(name[0]) + name.Substring(1).ToLower();
     }
 
     public static Result<LocationName> Create(string name)
@@ -30,6 +30,15 @@ public class LocationName
             errors.Add("Location Name cannot be NULL or empty");
         }
 
+        if (name.Length < 2)
+        {
+            errors.Add("Location name cannot be less than 2 characters");
+        }
+
+        if (name.Length > 25)
+        {
+            errors.Add("Location name cannot exceed 25 characters");
+        }
         if (errors.Any())
         {
             return Result.Failure(errors.ToArray());

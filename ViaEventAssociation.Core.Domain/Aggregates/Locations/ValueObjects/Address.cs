@@ -8,7 +8,7 @@ public class Address
 
     private Address(string name)
     {
-        Name = name;
+        Name = Name = char.ToUpper(name[0]) + name.Substring(1).ToLower();;
     }
 
     public static Result<Address> Create(string name)
@@ -29,7 +29,16 @@ public class Address
         {
             errors.Add("Address cannot be NULL or empty");
         }
+        
+        if (name.Length < 2)
+        {
+            errors.Add("Location address cannot be less than 2 characters");
+        }
 
+        if (name.Length > 25)
+        {
+            errors.Add("Location address cannot be exceed 25 characters");
+        }
         if (errors.Any())
         {
             return Result.Failure(errors.ToArray());
