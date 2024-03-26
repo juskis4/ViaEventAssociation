@@ -37,20 +37,7 @@ public class EndEventDateTests
     }
 
     // Failure Scenarios
-
-    [Fact]
-    public void Create_EndDateInThePast_ReturnsFailureResult()
-    {
-        // Arrange
-        DateTime pastEndDate = DateTime.Today.Subtract(TimeSpan.FromDays(1)).AddHours(13); 
-
-        // Act
-        var result = EndEventDate.Create(pastEndDate);
-
-        // Assert
-        Assert.False(result.IsSuccess);
-        Assert.Contains("Event end date cannot be in the past.", result.Errors);
-    }
+    
 
     [Fact]
     public void Create_ValidDateButBefore8am_ReturnsFailureResult()

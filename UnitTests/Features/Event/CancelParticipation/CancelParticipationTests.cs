@@ -24,7 +24,7 @@ public class CancelParticipationTests
         var participate = viaEvent.Participate(guestId.Data);
         
         // Act
-        var cancelResult = viaEvent.cancelParticipation(guestId.Data);
+        var cancelResult = viaEvent.CancelParticipation(guestId.Data);
         
         // Assert
         Assert.True(cancelResult.IsSuccess);
@@ -39,11 +39,28 @@ public class CancelParticipationTests
         var viaEvent = CreateEvent();
         var guestId = GuestId.Create();
         // Act
-        var cancelResult = viaEvent.cancelParticipation(guestId.Data);
+        var cancelResult = viaEvent.CancelParticipation(guestId.Data);
         
         // Assert
         Assert.True(cancelResult.IsSuccess);
         Assert.DoesNotContain(guestId.Data, viaEvent.GetGuests());
+    }
+    
+    //F1
+    [Fact]
+    public void CancelParticipation_FailureScenario1_ReturnsFailureResult()
+    {
+        // Arrange
+        var viaEvent = EventFactory.CreatePublicEventInActiveStatusInPast().Data;
+        var guestId = GuestId.Create();
+        viaEvent.SetGuest(guestId.Data);
+        // Act
+        var cancelResult = viaEvent.CancelParticipation(guestId.Data);
+        
+        // Assert
+        Assert.False(cancelResult.IsSuccess);
+        Assert.Contains("Cannot cancel your participation of past or ongoing events.", cancelResult.Errors);
+        Assert.Contains(guestId.Data, viaEvent.GetGuests());
     }
 
 }

@@ -1,5 +1,4 @@
-﻿using ViaEventAssociation.Core.Domain.Aggregates.Events;
-using ViaEventAssociation.Core.Domain.Aggregates.Guests.ValueObjects;
+﻿using ViaEventAssociation.Core.Domain.Aggregates.Guests.ValueObjects;
 
 namespace UnitTests.Features.Event.ParticipateInEvent;
 using Xunit;
@@ -99,23 +98,23 @@ public class ParticipateTests
     
     //F3
     // TODO: How to create event in the past to test:???!
-    /*
+    
     [Fact]
     public void Participate_FailureScenarioF3_ReturnsFailureResult()
     {
         // Arrange
-        var viaEvent = EventFactory.CreateEventInActiveStatus();
+        var viaEvent = EventFactory.CreatePublicEventInActiveStatusInPast();
         var guestId = GuestId.Create();
         // Act
         var result = viaEvent.Data.Participate(guestId.Data);
         
         // Assert
         Assert.False(result.IsSuccess);
-        Assert.Contains("You can only Join active events.", result.Errors);
+        Assert.Contains("You cannot join this event as it has already started.", result.Errors);
         Assert.DoesNotContain(guestId.Data, viaEvent.Data.GetGuests());
 
     }
-    */
+
     
     //F4
     [Fact]

@@ -117,6 +117,10 @@ public class ViaEvent
         {
             errors.Add("Event cannot be modified in its current status");
         }
+        if (newStartDate.Date < DateTime.Now)
+        {
+            errors.Add("Event start date cannot be in the past.");
+        }
 
         if (newStartDate.Date > newEndDate.Date)
         {
@@ -351,13 +355,23 @@ public class ViaEvent
         return Guests;
     }
 
-    public Result cancelParticipation(GuestId id)
+    public Result CancelParticipation(GuestId id)
     {
         if (StartDate.Date <= DateTime.Now)
         {
          return  Result.Failure("Cannot cancel your participation of past or ongoing events.");
         }
         Guests.Remove(id);
+        return Result.Success();
+    }
+
+    
+    /*
+     * This method only for test
+     */
+    public Result SetGuest(GuestId id)
+    {
+        Guests.Add(id);
         return Result.Success();
     }
 
