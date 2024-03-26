@@ -83,7 +83,7 @@ public class EventFactory
         var description = Description.Create("Test description");
         var startDate = StartEventDate.Create(new DateTime(2026, 12, 25, 9, 0, 0));
         var endDate = EndEventDate.Create(new DateTime(2026, 12, 25, 12, 0, 0));
-        var capacity = Capacity.Create(10);
+        var capacity = Capacity.Create(5);
 
         var results = new Result[] { eventId, title, description, startDate, endDate, capacity };
         if (results.All(r => r.IsSuccess))
