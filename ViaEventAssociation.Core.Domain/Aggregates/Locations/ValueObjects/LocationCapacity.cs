@@ -30,7 +30,7 @@ public class LocationCapacity
 
         if (capacity > 999)
         {
-            errors.Add("Location Capacity cannot exceed 999 ");
+            errors.Add("Location Capacity cannot exceed 999");
         }
         return errors.Any() ? Result.Failure(errors.ToArray()) : Result.Success();
     }
