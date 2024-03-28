@@ -1,0 +1,1 @@
+Here (in Common folder) we put stuff which may be shared across the Domain project, and may not otherwise have an obvious location.
