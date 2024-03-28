@@ -31,12 +31,7 @@ public class EndEventDate
 
         // Allowed end time (1:00 AM the next day)
         var allowedEndTime = date.Date.AddDays(1).AddHours(1);
-
-        if (date < DateTime.Today.AddHours(8))
-        {
-            errors.Add("Event end date cannot be in the past.");
-        }
-
+        
         // Check if end time is outside the allowed range 
         if (date.TimeOfDay < allowedStartTime.TimeOfDay && date.TimeOfDay > allowedEndTime.TimeOfDay)
         {

@@ -25,12 +25,7 @@ public class StartEventDate
     private static Result Validate(DateTime date)
     {
         var errors = new List<string>();
-
-        if (date < DateTime.Today.AddHours(8))
-        {
-            errors.Add("Event start date cannot be in the past.");
-        }
-
+        
         if (date.TimeOfDay < new TimeSpan(8, 0, 0))
         {
             errors.Add("Event start time must be after 08:00 AM");

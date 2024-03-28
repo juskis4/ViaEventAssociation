@@ -40,20 +40,6 @@ public class StartEventDateTests
     // Failure Scenarios 
 
     [Fact]
-    public void Create_DateInThePast_ReturnsFailureResult()
-    {
-        // Arrange
-        DateTime pastDate = DateTime.Today.AddHours(9).Subtract(TimeSpan.FromDays(1));
-
-        // Act
-        var result = StartEventDate.Create(pastDate);
-
-        // Assert
-        Assert.False(result.IsSuccess);
-        Assert.Contains("Event start date cannot be in the past.", result.Errors);
-    }
-
-    [Fact]
     public void Create_ValidDateButBefore8am_ReturnsFailureResult()
     {
         // Arrange

@@ -83,7 +83,7 @@ public class EventFactory
         var description = Description.Create("Test description");
         var startDate = StartEventDate.Create(new DateTime(2026, 12, 25, 9, 0, 0));
         var endDate = EndEventDate.Create(new DateTime(2026, 12, 25, 12, 0, 0));
-        var capacity = Capacity.Create(10);
+        var capacity = Capacity.Create(5);
 
         var results = new Result[] { eventId, title, description, startDate, endDate, capacity };
         if (results.All(r => r.IsSuccess))
@@ -95,6 +95,29 @@ public class EventFactory
             var errors = results.Where(r => !r.IsSuccess)
                                 .SelectMany(r => r.Errors)
                                 .ToArray();
+            return Result<ViaEvent>.Failure(errors);
+        }
+    }
+    
+    public static Result<ViaEvent> CreatePublicEventInActiveStatusInPast()
+    {
+        var eventId = EventId.Create();
+        var title = EventName.Create("Test Event in Active state");
+        var description = Description.Create("Test description");
+        var startDate = StartEventDate.Create(new DateTime(2021, 12, 25, 9, 0, 0));
+        var endDate = EndEventDate.Create(new DateTime(2021, 12, 25, 12, 0, 0));
+        var capacity = Capacity.Create(5);
+
+        var results = new Result[] { eventId, title, description, startDate, endDate, capacity };
+        if (results.All(r => r.IsSuccess))
+        {
+            return ViaEvent.Create(eventId.Data, title.Data, description.Data, startDate.Data, endDate.Data, capacity.Data, true, Status.Active);
+        }
+        else
+        {
+            var errors = results.Where(r => !r.IsSuccess)
+                .SelectMany(r => r.Errors)
+                .ToArray();
             return Result<ViaEvent>.Failure(errors);
         }
     }

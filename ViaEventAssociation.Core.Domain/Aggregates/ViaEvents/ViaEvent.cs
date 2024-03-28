@@ -32,6 +32,7 @@ public class ViaEvent
 
     private List<Invitation> _invitations = new();
 
+    private List<GuestId> Guests = new List<GuestId>();
 
     private ViaEvent(EventId id, EventName title, Description description, StartEventDate startDate,
         EndEventDate endDate, Capacity capacity, bool isPublic, Status status)
@@ -115,6 +116,10 @@ public class ViaEvent
         if (Status != Status.Draft && Status != Status.Ready)
         {
             errors.Add("Event cannot be modified in its current status");
+        }
+        if (newStartDate.Date < DateTime.Now)
+        {
+            errors.Add("Event start date cannot be in the past.");
         }
 
         if (newStartDate.Date > newEndDate.Date)
@@ -306,6 +311,67 @@ public class ViaEvent
 
         _invitations.Add(invitation.Data);
 
+        return Result.Success();
+    }
+
+    public Result Participate(GuestId id)
+    {
+        var errors = new List<string>();
+        if (Status != Status.Active)
+        {
+            errors.Add("You can only Join active events.");
+        }
+
+        if (Guests.Count >= Capacity.CapacityCount)
+        {
+            errors.Add("This Event is already at full capacity.");
+        }
+
+        if (!IsPublic)
+        {
+            errors.Add("Cannot join a non-public event.");
+        }
+
+        if (StartDate.Date <= DateTime.Now)
+        {
+            errors.Add("You cannot join this event as it has already started.");           
+        }
+
+        if (Guests.Contains(id))
+        {
+            errors.Add("You are already registered as a guest for this event.");
+        }
+
+        if (errors.Any())
+        {
+            return Result.Failure(errors.ToArray());
+        }
+        Guests.Add(id);
+        return Result.Success();
+    }
+
+    public List<GuestId> GetGuests()
+    {
+        return Guests;
+    }
+
+    public Result CancelParticipation(GuestId id)
+    {
+        if (StartDate.Date <= DateTime.Now)
+        {
+         return  Result.Failure("Cannot cancel your participation of past or ongoing events.");
+        }
+        Guests.Remove(id);
+        return Result.Success();
+    }
+
+    
+    /*
+     * This method only for test
+     */
+    public Result SetGuest(GuestId id)
+    {
+        Guests.Add(id);
         return Result.Success();
     }
 
